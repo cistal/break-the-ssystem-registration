@@ -1,0 +1,12 @@
+{
+  "name": "break-the-system-registration-vercel",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Registration page that safely writes submissions to Google Sheets.",
+  "engines": {
+    "node": ">=20 <23"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}

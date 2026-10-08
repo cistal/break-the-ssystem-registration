@@ -1,0 +1,491 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Break The System</title><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet"></head><body>
+<style>
+/* Layout: one dark poster column. Image header with live badge text over it,
+   a bordered registration card, a four-up benefit strip and a thin footer rule. */
+:root {
+  --bg: #03050a;
+  --panel: rgba(8, 11, 16, 0.92);
+  --field: #10141a;
+  --line: #2b2f37;
+  --line-soft: #242830;
+  --fg: #f3f4f6;
+  --body: #cfd3da;
+  --muted: #8d94a0;
+  --red: #ff1f2e;
+  --red-deep: #c40d1a;
+  --red-line: #e11d28;
+  --err: #ff7b85;
+  --display: "Exo 2", "Segoe UI", system-ui, sans-serif;
+  --tech: "Rajdhani", "Exo 2", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  background:
+    repeating-linear-gradient(90deg, rgba(255,255,255,.014) 0 1px, transparent 1px 4px),
+    var(--bg);
+  color: var(--fg);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.page { position: relative; overflow: hidden; padding-bottom: 40px; }
+/* red diagonal grit on the left edge, light echo on the right, fingerprint bottom-left */
+.page::before {
+  content: ""; position: absolute; left: 0; top: 46%; width: 110px; height: 34%;
+  background: repeating-linear-gradient(135deg, rgba(210,18,32,.34) 0 7px, rgba(210,18,32,0) 7px 15px);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent);
+          mask-image: linear-gradient(90deg, #000, transparent);
+  pointer-events: none;
+}
+.page::after {
+  content: ""; position: absolute; left: -90px; bottom: -70px; width: 300px; height: 300px;
+  background: repeating-radial-gradient(ellipse at 40% 55%, rgba(225,29,40,.55) 0 2px, rgba(225,29,40,0) 2px 7px);
+  -webkit-mask-image: radial-gradient(circle at 60% 40%, #000 0, transparent 68%);
+          mask-image: radial-gradient(circle at 60% 40%, #000 0, transparent 68%);
+  opacity: .55; pointer-events: none;
+}
+.wrap { position: relative; z-index: 1; max-width: 1024px; margin-inline: auto; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; container-type: inline-size; aspect-ratio: 1024 / 352; }
+.hero img {
+  display: block; width: 100%; height: 100%; object-fit: cover;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent), linear-gradient(180deg, #000 88%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent), linear-gradient(180deg, #000 88%, transparent);
+          mask-composite: intersect;
+}
+.badge {
+  position: absolute; left: 7.2cqw; top: 24.2cqw; margin: 0;
+  padding: .75cqw 1.5cqw .55cqw;
+  border: 1.5px solid var(--red-line); border-radius: 3px;
+  background: rgba(40, 0, 6, .38);
+  font-family: var(--tech); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(11px, 2.65cqw, 28px); letter-spacing: .1em; line-height: 1.15;
+  color: var(--red); text-shadow: 0 0 14px rgba(255,31,46,.45);
+  white-space: nowrap;
+}
+.tagline {
+  position: absolute; left: 12.4cqw; top: 29.4cqw; margin: 0;
+  font-weight: 500; text-transform: uppercase; color: #e9ebef;
+  font-size: clamp(9px, 1.5cqw, 16px); letter-spacing: .4em; white-space: nowrap;
+}
+
+/* ---------- card ---------- */
+.card {
+  margin: 8px clamp(16px, 6.4%, 66px) 0;
+  padding: clamp(20px, 3.6vw, 36px);
+  background: var(--panel);
+  border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.03);
+}
+.card h2 {
+  margin: 4px 0 0; font-weight: 800; text-transform: uppercase;
+  font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: .005em; text-wrap: balance;
+}
+.card h2 span { color: var(--red); }
+.intro { margin: 14px 0 0; max-width: 60ch; font-size: clamp(15px, 2vw, 17px); color: var(--body); }
+.intro strong { color: var(--fg); font-weight: 700; text-transform: uppercase; }
+.rule { width: 60px; height: 2px; margin: 26px 0 30px; background: var(--red-line); }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px clamp(20px, 4.1vw, 42px); }
+.field { min-width: 0; }
+.field label, .gtitle {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 15.5px; font-weight: 600; color: var(--fg);
+}
+.field label { margin-bottom: 12px; }
+.field .n { color: #b3b8c1; font-weight: 400; margin-right: 2px; }
+.req { color: var(--red); font-weight: 600; margin-left: 2px; }
+.opt-tag { color: var(--muted); font-weight: 400; margin-left: 4px; }
+.ic { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.field .ic { width: 25px; height: 25px; }
+
+.input {
+  display: block; width: 100%; height: 46px; padding: 0 18px 0 clamp(16px, 4vw, 40px);
+  background: var(--field); color: var(--fg);
+  border: 1px solid var(--line); border-radius: 6px;
+  font: 400 16px/1 var(--display);
+  transition: border-color .15s, box-shadow .15s;
+}
+.input::placeholder { color: var(--muted); opacity: 1; }
+.input:hover { border-color: #3a3f49; }
+.input:focus { outline: none; border-color: var(--red-line); box-shadow: 0 0 0 3px rgba(225,29,40,.2); }
+select.input {
+  appearance: none; -webkit-appearance: none; cursor: pointer; padding-right: 46px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f3f4f6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 16px center; background-size: 20px;
+}
+select.input:required:invalid { color: var(--muted); }
+select.input option { background: #10141a; color: var(--fg); }
+.field.bad .input { border-color: var(--err); }
+.err { margin-top: 7px; font-size: 13px; color: var(--err); }
+.err:empty { display: none; }
+
+/* option groups */
+.group {
+  margin-top: 22px; padding: 14px 20px 20px 8px;
+  border: 1px solid var(--line-soft); border-radius: 8px; background: rgba(2,4,7,.55);
+}
+.group.bad { border-color: var(--err); }
+.gtitle { padding-left: 0; margin-bottom: 14px; font-size: 16px; }
+.gtitle .ic { width: 26px; height: 26px; margin-left: 2px; }
+.gtitle .opt-tag { font-size: 15px; }
+.choices { margin-left: 24px; display: grid; gap: 14px 24px; }
+.c-session { grid-template-columns: minmax(0, 281px) minmax(0, 1fr); row-gap: 16px; }
+.c-level { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 36px; }
+.c-goals { grid-template-columns: 1fr 1fr; row-gap: 12px; }
+.opt { position: relative; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; font-size: 16.5px; color: #e6e8ec; min-width: 0; }
+.opt input { position: absolute; opacity: 0; width: 1px; height: 1px; margin: 0; }
+.rad, .chk {
+  flex: none; width: 21px; height: 21px; border: 1.5px solid #5b616c; background: transparent;
+  display: grid; place-items: center; transition: border-color .15s, background .15s, box-shadow .15s;
+}
+.rad { border-radius: 50%; }
+.chk { border-radius: 3px; }
+.rad::after { content: ""; width: 11px; height: 11px; border-radius: 50%; background: var(--red); transform: scale(0); transition: transform .15s; box-shadow: 0 0 10px rgba(255,31,46,.7); }
+.chk svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: 0; }
+.opt:hover .rad, .opt:hover .chk { border-color: var(--red); }
+.opt input:checked + .rad { border-color: var(--red); }
+.opt input:checked + .rad::after { transform: scale(1); }
+.opt input:checked + .chk { background: var(--red-line); border-color: var(--red-line); }
+.opt input:checked + .chk svg { opacity: 1; }
+.opt input:focus-visible + .rad, .opt input:focus-visible + .chk { outline: 2px solid var(--red); outline-offset: 3px; }
+
+.submit {
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+  width: 100%; height: 54px; margin-top: 24px; cursor: pointer;
+  border: 1px solid #ff4b57; border-radius: 6px;
+  background: linear-gradient(180deg, #ff2938 0%, #d4101e 55%, #a8070f 100%);
+  box-shadow: 0 0 26px rgba(255,31,46,.38), inset 0 1px 0 rgba(255,255,255,.28);
+  color: #fff; font: 800 19px/1 var(--display); letter-spacing: .07em; text-transform: uppercase;
+  transition: filter .15s, transform .05s;
+}
+.submit:hover { filter: brightness(1.12); }
+.submit:active { transform: translateY(1px); }
+.submit:disabled { cursor: wait; filter: grayscale(.2); opacity: .78; }
+.submit:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.submit .ic { width: 25px; height: 25px; stroke-width: 1.8; }
+.form-note { margin: 12px 0 0; font-size: 13.5px; color: var(--err); text-align: center; }
+.form-note:empty { display: none; }
+.honeypot { display: none; }
+
+/* success */
+.done { padding: 10px 0 6px; }
+.done .tick { width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--red); display: grid; place-items: center; color: var(--red); box-shadow: 0 0 30px rgba(255,31,46,.35); }
+.done .tick .ic { width: 34px; height: 34px; stroke-width: 2.2; }
+.done h3 { margin: 22px 0 0; font-size: clamp(26px, 4.4vw, 38px); font-weight: 800; text-transform: uppercase; line-height: 1.1; }
+.done h3 span { color: var(--red); }
+.done p { margin: 12px 0 0; color: var(--body); max-width: 56ch; }
+.summary { margin: 24px 0 0; display: grid; grid-template-columns: max-content 1fr; gap: 10px 22px; padding: 18px 20px; border: 1px solid var(--line-soft); border-radius: 8px; background: rgba(2,4,7,.55); }
+.summary dt { color: var(--muted); font-size: 14px; }
+.summary dd { margin: 0; min-width: 0; overflow-wrap: anywhere; font-weight: 500; }
+.again { margin-top: 22px; height: 46px; padding: 0 24px; cursor: pointer; background: transparent; color: var(--fg); border: 1px solid var(--red-line); border-radius: 6px; font: 700 14px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; }
+.again:hover { background: rgba(225,29,40,.14); }
+.again:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+
+/* ---------- benefits ---------- */
+.perks {
+  margin: 26px clamp(16px, 6.4%, 66px) 0; padding: 0 clamp(0px, 1.9vw, 19px);
+  display: grid; grid-template-columns: repeat(4, auto); justify-content: space-between; align-items: center; gap: 0;
+}
+.perk { display: flex; align-items: center; gap: 12px; min-width: 0; padding-inline: clamp(8px, 1.6vw, 18px); }
+.perk:first-child { padding-left: 0; }
+.perk:last-child { padding-right: 0; }
+.perk + .perk { border-left: 1px solid var(--line); }
+.perk .ic { width: 38px; height: 38px; color: var(--red); stroke-width: 1.5; }
+.perk b { display: block; font-size: 14.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .01em; line-height: 1.2; }
+.perk span { display: block; margin-top: 3px; font-size: 12.5px; color: var(--muted); line-height: 1.25; }
+
+.foot { margin-top: 42px; display: flex; align-items: center; justify-content: center; gap: 22px; padding-inline: 16px; }
+.foot i { width: 67px; height: 2px; background: var(--red-line); box-shadow: 0 0 10px rgba(255,31,46,.6); }
+.foot span { font-size: 10px; letter-spacing: .5em; text-transform: uppercase; color: #9a9fa8; margin-right: -.5em; white-space: nowrap; }
+
+@media (max-width: 860px) {
+  .perks { grid-template-columns: 1fr 1fr; row-gap: 22px; }
+  .perk, .perk:first-child, .perk:last-child { padding-inline: 0; }
+  .perk + .perk { border-left: 0; }
+  .perk:nth-child(even) { padding-left: 18px; border-left: 1px solid var(--line); }
+}
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .c-session, .c-goals { grid-template-columns: 1fr; }
+  .c-level { display: grid; grid-template-columns: 1fr 1fr; }
+  .choices { margin-left: 12px; }
+  .group { padding-right: 14px; }
+  .summary { grid-template-columns: 1fr; gap: 2px; }
+  .summary dd { margin-bottom: 10px; }
+}
+@media (max-width: 420px) {
+  .perks { grid-template-columns: 1fr; }
+  .perk:nth-child(even) { padding-left: 0; border-left: 0; }
+  .foot i { width: 36px; }
+  .foot span { letter-spacing: .32em; margin-right: -.32em; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M3.5 20.5l1.5-4.7A8.6 8.6 0 1 1 8.3 19z"/><path d="M9 8.2c.2 2.7 2.6 5.4 5.8 6.2l1.4-1.3-2.1-1.2-.9.8c-.9-.4-1.9-1.3-2.3-2.3l.8-.9-1.2-2.1z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M4.5 7.5h15M4.5 16.5h15"/></symbol>
+    <symbol id="i-cross" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="1.2"/><path d="M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24"><rect x="3.5" y="13" width="4" height="7.5" rx=".8"/><rect x="10" y="8.5" width="4" height="12" rx=".8"/><rect x="16.5" y="3.5" width="4" height="17" rx=".8"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M12 3.2a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3.2z"/><path d="M9.6 19h4.8M10.5 21.5h3M12 8v3.5"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M21.5 2.5L10.5 13.5"/><path d="M21.5 2.5l-6.8 19-4.2-8-8-4.2z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="11" cy="13" r="8.5"/><circle cx="11" cy="13" r="5"/><circle cx="11" cy="13" r="1.5"/><path d="M11 13L20 4M17 3.5V7h3.5"/></symbol>
+    <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="12.5" rx="1.8"/><path d="M8.5 20.5h7M12 16.5v4"/></symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a3.2 3.2 0 0 0-6.2 1A3.6 3.6 0 0 0 4.5 12.5a3.4 3.4 0 0 0 2 5.4A3.2 3.2 0 0 0 12 19.5z"/><path d="M12 5a3.2 3.2 0 0 1 6.2 1 3.6 3.6 0 0 1 1.3 6.5 3.4 3.4 0 0 1-2 5.4A3.2 3.2 0 0 1 12 19.5"/><path d="M12 5v14.5M8 10.5h4M12 14h4"/></symbol>
+    <symbol id="i-cert" viewBox="0 0 24 24"><rect x="3" y="3.5" width="18" height="13.5" rx="1.5"/><path d="M7 8h10M7 11.5h5"/><circle cx="16" cy="15.5" r="2.8"/><path d="M14.7 18l-.8 3.5 2.1-1.2 2.1 1.2-.8-3.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  </defs>
+</svg>
+
+<div class="page">
+  <div class="wrap">
+
+    <header class="hero">
+      <img src="header.jpg" alt="" width="1024" height="352">
+      <h1 class="sr-only">Break The System</h1>
+      <p class="badge">Free Pentesting Workshop</p>
+      <p class="tagline">Think like a pentester</p>
+    </header>
+
+    <main class="card">
+      <div id="intro">
+        <h2>Register <span>Now</span></h2>
+        <p class="intro">Fill in the form below to secure your spot in the <strong>Break the System</strong> — Free Pentesting Workshop.</p>
+        <div class="rule"></div>
+      </div>
+
+      <form id="reg" novalidate>
+        <div class="honeypot" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="grid">
+          <div class="field" id="f-name">
+            <label for="name"><svg class="ic"><use href="#i-user"/></svg><span><span class="n">1.</span> Full Name <span class="req">*</span></span></label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Enter your full name" required>
+            <div class="err" id="err-name" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="f-phone">
+            <label for="phone"><svg class="ic"><use href="#i-wa"/></svg><span>2. WhatsApp Number <span class="req">*</span></span></label>
+            <input class="input" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Enter your WhatsApp number" required>
+            <div class="err" id="err-phone" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="f-email">
+            <label for="email"><svg class="ic"><use href="#i-mail"/></svg><span>3. Email Address <span class="req">*</span></span></label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="Enter your email address" required>
+            <div class="err" id="err-email" aria-live="polite"></div>
+          </div>
+
+          <div class="field" id="f-country">
+            <label for="country"><svg class="ic"><use href="#i-globe"/></svg><span>4. Country <span class="req">*</span></span></label>
+            <select class="input" id="country" name="country" autocomplete="country-name" required>
+              <option value="" selected disabled>Select your country</option>
+            </select>
+            <div class="err" id="err-country" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="group" id="g-session" role="radiogroup" aria-labelledby="t-session">
+          <div class="gtitle" id="t-session"><svg class="ic"><use href="#i-cross"/></svg><span>5. Which session are you interested in? <span class="req">*</span></span></div>
+          <div class="choices c-session">
+            <label class="opt"><input type="radio" name="session" value="Network Pentesting"><span class="rad"></span>Network Pentesting</label>
+            <label class="opt"><input type="radio" name="session" value="Web Pentesting"><span class="rad"></span>Web Pentesting</label>
+            <label class="opt"><input type="radio" name="session" value="Both Sessions"><span class="rad"></span>Both Sessions</label>
+          </div>
+          <div class="err" id="err-session" aria-live="polite" style="margin-left:24px"></div>
+        </div>
+
+        <div class="group" id="g-level" role="radiogroup" aria-labelledby="t-level">
+          <div class="gtitle" id="t-level"><svg class="ic"><use href="#i-bars"/></svg><span>6. What is your current level in Cybersecurity? <span class="req">*</span></span></div>
+          <div class="choices c-level">
+            <label class="opt"><input type="radio" name="level" value="Complete Beginner"><span class="rad"></span>Complete Beginner</label>
+            <label class="opt"><input type="radio" name="level" value="Beginner"><span class="rad"></span>Beginner</label>
+            <label class="opt"><input type="radio" name="level" value="Intermediate"><span class="rad"></span>Intermediate</label>
+            <label class="opt"><input type="radio" name="level" value="Advanced"><span class="rad"></span>Advanced</label>
+          </div>
+          <div class="err" id="err-level" aria-live="polite" style="margin-left:24px"></div>
+        </div>
+
+        <div class="group" role="group" aria-labelledby="t-goals">
+          <div class="gtitle" id="t-goals"><svg class="ic"><use href="#i-bulb"/></svg><span>7. What do you want to get from this workshop? <span class="opt-tag">(Optional)</span></span></div>
+          <div class="choices c-goals">
+            <label class="opt"><input type="checkbox" name="goals" value="Understand Cybersecurity &amp; Pentesting"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Understand Cybersecurity &amp; Pentesting</label>
+            <label class="opt"><input type="checkbox" name="goals" value="Gain Practical Experience"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Gain Practical Experience</label>
+            <label class="opt"><input type="checkbox" name="goals" value="Learn Network Pentesting"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Learn Network Pentesting</label>
+            <label class="opt"><input type="checkbox" name="goals" value="Explore Cybersecurity as a Career"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Explore Cybersecurity as a Career</label>
+            <label class="opt"><input type="checkbox" name="goals" value="Learn Web Pentesting"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Learn Web Pentesting</label>
+            <label class="opt"><input type="checkbox" name="goals" value="Just want to discover Pentesting"><span class="chk"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></span>Just want to discover Pentesting</label>
+          </div>
+        </div>
+
+        <button class="submit" type="submit" id="submit-button"><svg class="ic"><use href="#i-send"/></svg><span>Submit</span></button>
+        <p class="form-note" id="form-note" aria-live="polite"></p>
+      </form>
+
+      <section class="done" id="done" hidden aria-live="polite">
+        <div class="tick"><svg class="ic"><use href="#i-check"/></svg></div>
+        <h3>You're <span>in</span></h3>
+        <p id="done-msg">Your registration form is complete.</p>
+        <dl class="summary" id="summary"></dl>
+        <button class="again" type="button" id="again">Register another person</button>
+      </section>
+    </main>
+
+    <ul class="perks" style="list-style:none">
+      <li class="perk"><svg class="ic"><use href="#i-target"/></svg><div><b>2 Free Sessions</b><span>Network &amp; Web Pentesting</span></div></li>
+      <li class="perk"><svg class="ic"><use href="#i-monitor"/></svg><div><b>Practical Demos</b><span>Real-World Scenarios</span></div></li>
+      <li class="perk"><svg class="ic"><use href="#i-brain"/></svg><div><b>Beginner Friendly</b><span>No Prior Experience Needed</span></div></li>
+      <li class="perk"><svg class="ic"><use href="#i-cert"/></svg><div><b>Certificate</b><span>After Completing Both Sessions</span></div></li>
+    </ul>
+
+    <footer class="foot"><i></i><span>Break the System</span><i></i></footer>
+  </div>
+</div>
+
+<script>
+(function () {
+  var COUNTRIES = "Bahrain|Egypt|Iran|Iraq|Jordan|Kuwait|Lebanon|Oman|Palestine|Qatar|Saudi Arabia|Syria|Turkey|United Arab Emirates|Yemen".split("|");
+
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $("reg"), done = $("done"), intro = $("intro"), note = $("form-note");
+  var country = $("country");
+
+  COUNTRIES.forEach(function (c) {
+    var o = document.createElement("option");
+    o.value = c; o.textContent = c; country.appendChild(o);
+  });
+
+  function setError(key, msg) {
+    var box = $("err-" + key);
+    if (box) box.textContent = msg || "";
+    var holder = $("f-" + key) || $("g-" + key);
+    if (holder) holder.classList.toggle("bad", !!msg);
+  }
+
+  function checked(name) {
+    var el = form.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : "";
+  }
+
+  function validate() {
+    var first = null;
+    function fail(key, msg, el) { setError(key, msg); if (!first) first = el; }
+
+    var name = $("name").value.trim();
+    var phone = $("phone").value.replace(/[\s\-().]/g, "");
+    var email = $("email").value.trim();
+
+    setError("name"); setError("phone"); setError("email"); setError("country"); setError("session"); setError("level");
+
+    if (name.length < 2) fail("name", "Enter your full name.", $("name"));
+    if (!/^\+?\d{7,15}$/.test(phone)) fail("phone", "Enter a valid WhatsApp number, for example +201001234567.", $("phone"));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) fail("email", "Enter a valid email address.", $("email"));
+    if (!country.value) fail("country", "Select your country.", country);
+    if (!checked("session")) fail("session", "Choose the session you want to join.", form.querySelector('input[name="session"]'));
+    if (!checked("level")) fail("level", "Choose your current level.", form.querySelector('input[name="level"]'));
+    return first;
+  }
+
+  ["name", "phone", "email", "country"].forEach(function (k) {
+    $(k).addEventListener("input", function () { setError(k); note.textContent = ""; });
+  });
+  form.addEventListener("change", function (e) {
+    if (e.target.name === "session" || e.target.name === "level") setError(e.target.name);
+  });
+
+  function row(dl, label, value) {
+    var dt = document.createElement("dt"); dt.textContent = label;
+    var dd = document.createElement("dd"); dd.textContent = value || "—";
+    dl.appendChild(dt); dl.appendChild(dd);
+  }
+
+  function setSubmitting(isSubmitting) {
+    var button = $("submit-button");
+    button.disabled = isSubmitting;
+    button.setAttribute("aria-busy", String(isSubmitting));
+    button.querySelector("span").textContent = isSubmitting ? "Saving..." : "Submit";
+  }
+
+  function showSuccess(data) {
+    var dl = $("summary"); dl.textContent = "";
+    row(dl, "Name", data.name);
+    row(dl, "WhatsApp", data.whatsapp);
+    row(dl, "Email", data.email);
+    row(dl, "Country", data.country);
+    row(dl, "Session", data.session);
+    row(dl, "Level", data.level);
+    row(dl, "Goals", data.goals.join(", "));
+    $("done-msg").textContent = "Thanks, " + data.name.split(" ")[0] + ". Your registration for the " + data.session + " workshop is confirmed.";
+
+    form.hidden = true; intro.hidden = true; done.hidden = false;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    done.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+  }
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var bad = validate();
+    if (bad) {
+      note.textContent = "Please fix the highlighted fields.";
+      bad.focus();
+      return;
+    }
+    note.textContent = "";
+
+    var goals = Array.prototype.map.call(form.querySelectorAll('input[name="goals"]:checked'), function (i) { return i.value; });
+    var data = {
+      name: $("name").value.trim(),
+      whatsapp: $("phone").value.trim(),
+      email: $("email").value.trim(),
+      country: country.value,
+      session: checked("session"),
+      level: checked("level"),
+      goals: goals,
+      website: $("website").value
+    };
+
+    setSubmitting(true);
+    try {
+      var response = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      var result = null;
+      try { result = await response.json(); } catch (ignore) {}
+      if (!response.ok || !result || !result.ok) {
+        throw new Error(result && result.error ? result.error : "We could not save your registration. Please try again.");
+      }
+      showSuccess(data);
+    } catch (error) {
+      note.textContent = error && error.message ? error.message : "We could not save your registration. Please try again.";
+    } finally {
+      setSubmitting(false);
+    }
+  });
+
+  $("again").addEventListener("click", function () {
+    form.reset();
+    ["name", "phone", "email", "country", "session", "level"].forEach(function (k) { setError(k); });
+    done.hidden = true; form.hidden = false; intro.hidden = false;
+    $("name").focus();
+  });
+})();
+</script>
+
+</body></html>
